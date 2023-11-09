@@ -1,0 +1,56 @@
+$background: #544B3D;
+$background: #4C8577;
+$background: #4E6E58;
+$app-border: .2rem solid lighten($background, 5);
+body {
+    margin: 0;
+    padding: 0;
+    background-color: $background;
+}
+#forest {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 50vh;
+    background-image: url("./forest2.webp");
+    background-size: cover;
+    border-bottom: 2px solid black;
+    border-radius: 0 0 4% 4%;
+    z-index: -1;
+}
+#app-container {
+    padding-top: 8rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    
+    #app {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        background-color: $background;
+        min-width: 30vw;
+        font-size: 2rem;
+        border: $app-border;
+        border-radius: 8%;
+        color: white;
+        #break-length, #session-length {
+            padding: 0 16px;
+            display: inline-block;
+        }
+        button {
+            margin: 16px;
+            padding: 8px 16px;
+            border: 1px solid black;
+            border-radius: 8px;
+            background-color: lighten($background, 5);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darken($background, 2);
+        }
+    }
+}
