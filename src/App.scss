@@ -12,10 +12,10 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 50vh;
+    height: 60vh;
     background-image: url("./forest2.webp");
     background-size: cover;
-    border-bottom: 2px solid black;
+    border-bottom: .2rem solid lighten($background, 10);
     border-radius: 0 0 4% 4%;
     z-index: -1;
 }
