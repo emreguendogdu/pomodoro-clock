@@ -1,56 +1,91 @@
 $background: #544B3D;
 $background: #4C8577;
 $background: #4E6E58;
+$text-color: #fff;
 $app-border: .2rem solid lighten($background, 5);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     margin: 0;
     padding: 0;
     background-color: $background;
-}
-#forest {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 60vh;
-    background-image: url("./forest2.webp");
-    background-size: cover;
-    border-bottom: .2rem solid lighten($background, 10);
-    border-radius: 0 0 4% 4%;
-    z-index: -1;
-}
-#app-container {
-    padding-top: 8rem;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    
-    #app {
+    font-family: 'Montserrat', sans-serif;
+    #forest {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 60vh;
+        background-image: url("./forest2.webp");
+        background-size: cover;
+        border-bottom: .2rem solid lighten($background, 10);
+        border-radius: 0 0 4% 4%;
+        z-index: -1;
+    }
+    #app-container {
+        padding-top: 8rem;
         display: flex;
-        flex-direction: column;
         text-align: center;
-        background-color: $background;
-        min-width: 30vw;
-        font-size: 2rem;
-        border: $app-border;
-        border-radius: 8%;
-        color: white;
-        #break-length, #session-length {
-            padding: 0 16px;
-            display: inline-block;
+        justify-content: center;
+        #app {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: $background;
+            min-width: 30vw;
+            font-size: 2rem;
+            border: $app-border;
+            border-radius: 8%;
+            color: $text-color;
+            p {
+                margin: 10px;
+                padding: 16px;
+            }
+            #break-length, #session-length {
+                padding: 0 16px;
+                display: inline-block;
+            }
+            #break-label, #session-label {
+                border-bottom: 10px solid lighten($background, 5);
+            }
+            button {
+                margin: 16px;
+                padding: 8px 16px;
+                border: 1px solid black;
+                border-radius: 8px;
+                background-color: lighten($background, 5);
+                color: $text-color;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: darken($background, 2);
+            }
+            .break-span {
+                display: block;
+                font-size: 1rem;
+                background-color: lighten($background, 5);
+                color: $text-color;
+            }
         }
-        button {
-            margin: 16px;
-            padding: 8px 16px;
-            border: 1px solid black;
-            border-radius: 8px;
-            background-color: lighten($background, 5);
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
+    }
+    
+    footer {
+        padding-top: 10px; 
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        a {
+            text-decoration: none;
+            color: $text-color;
         }
-        button:hover {
-            background-color: darken($background, 2);
+        a:hover {
+            color: gold;
         }
     }
 }

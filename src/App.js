@@ -1,12 +1,14 @@
 import "./App.scss"
 import { useState, useRef } from 'react';
+// TODO: Fix playSound ( - Stop when reset clicked - Fix all errors)
+// TODO: Re-design the website, Session/timeLeft should be a priority to eye
 
 export default function App() {
   // State variables for break length, session length, time left, and session number
   const [breakLength, setBreakLength] = useState(5);
-  const [sessionLength, setSessionLength] = useState(0);
+  const [sessionLength, setSessionLength] = useState(25);
   const [timeLeft, setTimeLeft] = useState(`${sessionLength}:00`);
-  const [sessionNum, setSessionNum] = useState(1);
+  const [sessionNum, setSessionNum] = useState(0);
   const [isSession, setIsSession] = useState(true);
   const intervalIdRef = useRef(null);
 
@@ -27,20 +29,21 @@ export default function App() {
     if (action === "increment") {
       if (length !== 60) {
         setLength(prev => prev + 1);
+       if (isSession && event === "session") {
+          setTimeLeft(`${sessionLength + 1}:00`);
+        } else if (!isSession && event === "break"){
+          setTimeLeft(`${breakLength + 1}:00`);
+        } 
       }
     } else if (action === "decrement") {
-      if (length !== 0) {
         setLength(prev => prev - 1);
+        if (isSession && event === "session") {
+          setTimeLeft(`${sessionLength - 1}:00`);
+        } else if (!isSession && event === "break") {
+          setTimeLeft(`${breakLength - 1}:00`);
+        } 
       }
     }
-
-    if (event === "session") {
-      setTimeLeft(`${sessionLength + (action === "increment" ? 1 : -1)}:00`);
-    };
-    if (event === "break" && isSession === false) {
-      setTimeLeft(`${breakLength + (action === "increment"? 1 : -1)}:00`);
-    };
-  };
 
   const handleReset = () => {
     // Stop the timer
@@ -49,11 +52,18 @@ export default function App() {
     // Reset the break length, session length, time left, and session number
     setBreakLength(5);
     setSessionLength(25);
-    setTimeLeft(`${sessionLength}:00`);
+    setTimeLeft(`${25}:00`);
     setSessionNum(1);
     setIsSession(true);
   };
-
+  const playSound = () => { 
+    const audio = new Audio();
+    // audio.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
+    audio.src = "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3";
+    audio.autoplay = false;
+    audio.muted = true;
+    audio.play();
+  }
   const handleStartStop = () => {
     if (intervalIdRef.current === null) {
       // Start the timer
@@ -65,9 +75,10 @@ export default function App() {
         if (seconds === 0) {
           if (minutes === 0) {
             // End of session/break, switch to the other one
+            playSound();
             setIsSession(prev => !prev);
-            setSessionNum(prev => prev + 1);
-            setTimeLeft(isSession ? `${breakLength}:00` : `${sessionLength}:00`);
+            setSessionNum(prev => isSession ? prev + 1 : prev);
+            setTimeLeft(isSession ? `${String(breakLength).padStart(2, '0')}:00` :`${String(sessionLength).padStart(2, '0')}:00`);
             clearInterval(intervalIdRef.current);
             intervalIdRef.current = null;
             return;
@@ -120,17 +131,26 @@ export default function App() {
             <button id="session-decrement" onClick={handleValue}>
               <i className="fa fa-arrow-down"></i>
             </button>
-          </div>
-
           {/* Timer */}
           <div id="timer">
-            <p id="timer-label">{isSession ? 'Session' : 'Break'} {sessionNum}</p>
+            <p id="timer-label">
+              {isSession ? sessionNum > 0 ? 'Session ' + sessionNum : 'Session' : 'Break'}
+              <span className="break-span">{isSession ? "" : `(Next session: ${sessionNum})`}</span>
+            </p>
             <p id="time-left">{timeLeft}</p>
+            <audio id="beep">
+              <source src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
+            </audio>
             <button id="start_stop" onClick={handleStartStop}>Start/Stop</button>
             <button id="reset" onClick={handleReset}>Reset</button>
           </div>
         </div>
       </div>
+          </div>
+
+      <footer>
+        <a href="https://github.com/emreguendogdu" target="_blank" rel="noreferrer noopener">GitHub</a>
+      </footer>
     </>
   );
 }
