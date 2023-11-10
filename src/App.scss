@@ -3,6 +3,7 @@ $background: #4C8577;
 $background: #4E6E58;
 $text-color: #fff;
 $app-border: .2rem solid lighten($background, 5);
+$highlight: gold;
 
 * {
     margin: 0;
@@ -37,7 +38,7 @@ body {
             text-align: center;
             background-color: $background;
             min-width: 30vw;
-            font-size: 2rem;
+            font-size: 3rem;
             border: $app-border;
             border-radius: 8%;
             color: $text-color;
@@ -49,8 +50,10 @@ body {
                 padding: 0 16px;
                 display: inline-block;
             }
-            #break-label, #session-label {
+            #break-label, #session-label, #timer-label {
                 text-transform: capitalize;
+            }
+            .border-bottom {
                 border-bottom: 10px solid lighten($background, 5);
             }
             button {
@@ -74,7 +77,15 @@ body {
             }
         }
     }
-    
+.length-container {
+    display: flex;
+    p {
+        font-size: 2rem;
+    }
+}
+.highlight {
+    color: $highlight;
+}
     footer {
         padding-top: 10px; 
         width: 100vw;
@@ -86,7 +97,7 @@ body {
             color: $text-color;
         }
         a:hover {
-            color: gold;
+            color: $highlight;
         }
     }
 }

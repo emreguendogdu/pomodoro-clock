@@ -6,40 +6,39 @@ import { Footer } from "./Footer";
 
 // TODO: Padlock sadece timeleft'te değişim olunca geliyor, sürekli gelmeli ya da length değişince de gelmeli
 export default function App() {
-  const [breakLength, setBreakLength] = useState(5);
+  const [breakLength, setBreakLength] = useState(0);
   const [sessionLength, setSessionLength] = useState(0);
-  const [sessionNum, setSessionNum] = useState(0);
+  const [sessionNum, setSessionNum] = useState(1);
   const [isSession, setIsSession] = useState(true);
   // The purpose of intervalIdRef is to have access to the interval ID from within different parts of the component, especially for clearing the interval using clearInterval when needed.
   const intervalIdRef = useRef(null);
 
   const handleValue = (e) => {
-    let id = e.target.id;
-    let event = id.split("-")[0];
-    let action = id.split("-")[1];
+    let event = e.target.id.split("-")[0];
+    let action = e.target.id.split("-")[1];
     if (action === undefined || event === undefined) return;
-    const length = event === "break" ? breakLength : sessionLength;
     const setLength = event === "break" ? setBreakLength : setSessionLength;
     if (action === "increment") {
-      if (length !== 60) {
-        setLength((prev) => prev + 1);
-      }
+        setLength((prev) => (prev < 60 ? (prev + 1): prev));
     } else if (action === "decrement") {
-      if (length !== 1) {
-        setLength((prev) => prev - 1);
+        setLength((prev) => (prev > 1 ? prev - 1 : prev));
       }
-    }
   };
 
   const stopInterval = () => {
     clearInterval(intervalIdRef.current);
     intervalIdRef.current = null;
   }
+  
   const handleReset = () => {
     stopInterval();
+    let audio = document.getElementById("beep");
+    audio.pause();
+    audio.currentTime = 0;
+    document.getElementById("timer-label").classList.add("border-bottom");
     setBreakLength(5);
     setSessionLength(25);
-    setSessionNum(0);
+    setSessionNum(1);
     setIsSession(true);
 
     // Reset the time left display
@@ -47,11 +46,13 @@ export default function App() {
   };
 
   const playSound = () => {
-    const audio = new Audio();
-    audio.src =
-      "https://s3.amazonaws.com/freecodecamp/simonSound1.mp3";
-    audio.autoplay = false;
-    audio.muted = true;
+    let audio = document.getElementById("beep");
+    audio.playbackRate = 1.5; 
+    if (isSession) {
+      setTimeout(() => audio.loop = false, 3000);
+    } else {
+      setTimeout(() => audio.loop = false, 1000);
+    }
     audio.play();
   };
 
@@ -60,6 +61,9 @@ export default function App() {
     if (intervalIdRef.current === null) {
       let length = isSession ? sessionLength : breakLength;
       length *= 60;
+      let audio = document.getElementById("beep");
+      audio.pause();
+      audio.currentTime = 0;
       const id = setInterval(() => {
         if (length === 0) {
           playSound();
@@ -67,6 +71,11 @@ export default function App() {
           setSessionNum((prev) => isSession ? prev + 1 : prev);
           // If time ends, and was Session, change to breakLength
           length = 60 * (isSession ? breakLength : sessionLength);
+          if (isSession) {
+            document.getElementById("timer-label").classList.remove("border-bottom");
+          } else {
+            document.getElementById("timer-label").classList.add("border-bottom");
+          }
           stopInterval();
         } else {
           length -= 1;
@@ -98,9 +107,11 @@ export default function App() {
       <div id="forest" />
       <div id="app-container">
         <div id="app">
+            <Timer isSession={isSession} sessionNum={sessionNum} sessionLength={sessionLength} handleStartStop={handleStartStop} handleReset={handleReset}/>
+            <div className="length-container">
             <LengthControl event="break" length={breakLength} handleValue={handleValue} />
             <LengthControl event="session" length={sessionLength} handleValue={handleValue} />
-            <Timer isSession={isSession} sessionNum={sessionNum} sessionLength={sessionLength} handleStartStop={handleStartStop} handleReset={handleReset}/>
+            </div>
         </div>
       </div>
       <Footer />

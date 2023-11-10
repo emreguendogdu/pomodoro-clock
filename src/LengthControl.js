@@ -1,7 +1,7 @@
 export function LengthControl(props) {
     return (
         <div className="length-control">
-            <p id={`${props.event}-label`}>{props.event} Length</p>
+            <p className="border-bottom" id={`${props.event}-label`}>{props.event} Length</p>
             <button id={`${props.event}-decrement`} onClick={props.handleValue}>
             <i className="fa fa-arrow-down" />
             </button>
