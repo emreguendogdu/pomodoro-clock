@@ -50,6 +50,7 @@ body {
                 display: inline-block;
             }
             #break-label, #session-label {
+                text-transform: capitalize;
                 border-bottom: 10px solid lighten($background, 5);
             }
             button {
