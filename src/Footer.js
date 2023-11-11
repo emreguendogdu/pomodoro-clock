@@ -6,6 +6,7 @@ export const Footer = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
+          <i className="fa fa-github" />
           GitHub
         </a>
       </footer>

@@ -4,15 +4,14 @@ import { LengthControl } from "./LengthControl";
 import { Timer } from "./Timer";
 import { Footer } from "./Footer";
 
-const ms = 1;
-const initSessionLength = 1;
+const ms = 1000;
+const initBreakLength = 0;
+const initSessionLength = 0;
 
 function App() {
-  const [breakLength, setBreakLength] = useState(5);
+  const [breakLength, setBreakLength] = useState(initBreakLength);
   const [sessionLength, setSessionLength] = useState(initSessionLength);
-  const [sessionNum, setSessionNum] = useState(1);
-  const [isSession, setIsSession] = useState(true);
-  const [display, setDisplay] = useState(`Session ${sessionNum}`);
+  const [labelDisplay, setLabelDisplay] = useState("Session 1");
   const intervalIdRef = useRef(null);
 
   const formatTime = (minutes, seconds) => {
@@ -47,25 +46,52 @@ function App() {
     handleAudio("stop");
     setBreakLength(5);
     setSessionLength(25);
-    setSessionNum(1);
-    setIsSession(true);
-    setDisplay(`Session 1`);
-    document.getElementById("timer-label").classList.add("border-bottom");
     updateDisplay(25 * 60);
+    num = 1;
+    setLabelDisplay(`Session 1`);
+    handleTimerLabel("session");
   };
+
+  const handleTimerLabel = (value) => {
+    const timerLabel = document.getElementById("timer-label");
+    const labelContainer = document.getElementById('label-container');
+    switch (value) {
+      case "break":
+        setLabelDisplay("Break");
+        timerLabel.classList.remove("border-bottom");
+        if (!document.querySelector(".break-span")) {
+          const span = document.createElement("span");
+          span.classList.add("break-span");
+          span.innerText = `Next session: ${num}`;
+          labelContainer.appendChild(span);
+        }
+        return;
+      case "session":
+        if (document.querySelector(".break-span")) {
+        labelContainer.removeChild(document.querySelector(".break-span"));
+        }
+        timerLabel.classList.add("border-bottom");
+        return;
+      default:
+        return;
+      }
+    }
 
   const handleAudio = (value) => {
     const audio = document.getElementById("beep");
-
-    if (value === "play") {
-      audio.playbackRate = 1.5;
-      setTimeout(() => (audio.loop = false), isSession ? 3000 : 1000);
-      audio.play();
-    } else if (value === "stop") {
-      audio.pause();
-      audio.currentTime = 0;
+    switch (value) {
+      case "play":
+        audio.play();
+        audio.playbackRate = 1.5;
+        setTimeout(() => (audio.loop = false), 1000);
+        return;
+      case "stop":
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      default:
+        return;
     }
-
   }
 
   const stopInterval = () => {
@@ -73,45 +99,43 @@ function App() {
     intervalIdRef.current = null;
   };
   
-  const handleStartStop = () => {
-    const timerLabel = document.getElementById("timer-label");
-    
-    if (intervalIdRef.current === null) {
-      let length = 60 * (isSession ? sessionLength : breakLength);
-      handleAudio("stop");
-      
-      const id = setInterval(() => {
-        if (length === 0) {
-          // handleAudio("play");
-          if (isSession) { 
-            // EXECUTES HERE.
-            setDisplay("Break");
-            timerLabel.classList.remove("border-bottom");
-            setSessionNum((prev) => prev + 1);
-            length = 60 * breakLength;
-            setIsSession(false);
-          } else {
-            // CAN'T EXECUTE HERE.
-            setDisplay(`Session ${sessionNum}`);
-            timerLabel.classList.add("border-bottom");
-            length = 60 * breakLength;
-            setIsSession(true);
-          }
-          stopInterval();
-        } else {
-          length -= 1;
-        }
-        updateDisplay(length);
-      }, ms);
+let timerDuration = 60 * sessionLength;
+let timerStatus = "";
+let num = 1;
 
+  const handleStartStop = () => {
+    // IntervalIDRef.current = stopped;
+    if (intervalIdRef.current === null) {
+      handleAudio("stop");
+
+      const id = setInterval(() => {
+        if (timerDuration === 0) {
+            handleAudio("play");
+          if (timerStatus !== "break") { 
+            num += 1;
+            timerDuration = breakLength * 60;
+            timerStatus = "break";
+            handleTimerLabel("break");
+          } else {
+            timerDuration = sessionLength * 60;
+            handleTimerLabel("session");
+            setLabelDisplay(`Session ${num}`);
+            timerStatus = "session";
+          }
+        } else { // if timer isn't 0
+          timerDuration -= 1;
+        }
+        updateDisplay(timerDuration);
+      }, ms);
+      // set timer to running 
       intervalIdRef.current = id;
-    } else {
+    } else  {  // Button click if timer running
       stopInterval();
     }
   };
 
   useEffect(() => {
-    const minutes = isSession ? sessionLength : breakLength;
+    const minutes = sessionLength;
     const seconds = 0;
     updateDisplay(minutes * 60 + seconds);
   });
@@ -128,10 +152,7 @@ function App() {
       <div id="app-container">
         <div id="app">
           <Timer
-            isSession={isSession}
-            display={display}
-            sessionNum={sessionNum}
-            sessionLength={sessionLength}
+            labelDisplay={labelDisplay}
             handleStartStop={handleStartStop}
             handleReset={handleReset}
           />

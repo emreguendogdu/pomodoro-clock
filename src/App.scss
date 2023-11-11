@@ -1,9 +1,10 @@
 $background: #544B3D;
-$background: #4C8577;
-$background: #4E6E58;
 $text-color: #fff;
+$text-color: #4C8577;
+$text-color: lighten(#4E6E58, 40);
+$background: #4B3C37;
 $app-border: .2rem solid lighten($background, 5);
-$highlight: gold;
+$highlight: #B39E57;
 
 * {
     margin: 0;
@@ -45,6 +46,10 @@ body {
             p {
                 margin: 10px;
                 padding: 16px;
+                transition: 500ms;
+            }
+            p:hover {
+                color: $highlight;
             }
             #break-length, #session-length {
                 padding: 0 16px;
@@ -65,9 +70,11 @@ body {
                 color: $text-color;
                 font-size: 16px;
                 cursor: pointer;
+                transition: 400ms;
             }
             button:hover {
                 background-color: darken($background, 2);
+                color: $highlight;
             }
             .break-span {
                 display: block;
@@ -95,9 +102,15 @@ body {
         a {
             text-decoration: none;
             color: $text-color;
+            transition: 800ms;
+            i {
+                    padding: 0 5px;
+            }
         }
         a:hover {
             color: $highlight;
+            font-size: 1.5rem;
         }
+        
     }
 }
