@@ -5,11 +5,11 @@ import { Timer } from "./Timer";
 import { Footer } from "./Footer";
 
 const ms = 1;
-const initialSessionLength = 1;
+const initSessionLength = 1;
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
-  const [sessionLength, setSessionLength] = useState(initialSessionLength);
+  const [sessionLength, setSessionLength] = useState(initSessionLength);
   const [sessionNum, setSessionNum] = useState(1);
   const [isSession, setIsSession] = useState(true);
   const [display, setDisplay] = useState(`Session ${sessionNum}`);
@@ -44,7 +44,7 @@ function App() {
 
   const handleReset = () => {
     stopInterval();
-    stopSound();
+    handleAudio("stop");
     setBreakLength(5);
     setSessionLength(25);
     setSessionNum(1);
@@ -54,54 +54,56 @@ function App() {
     updateDisplay(25 * 60);
   };
 
-  const playSound = () => {
+  const handleAudio = (value) => {
     const audio = document.getElementById("beep");
-    audio.playbackRate = 1.5;
 
-    setTimeout(() => (audio.loop = false), isSession ? 3000 : 1000);
+    if (value === "play") {
+      audio.playbackRate = 1.5;
+      setTimeout(() => (audio.loop = false), isSession ? 3000 : 1000);
+      audio.play();
+    } else if (value === "stop") {
+      audio.pause();
+      audio.currentTime = 0;
+    }
 
-    audio.play();
-  };
-
-  const stopSound = () => {
-    const audio = document.getElementById("beep");
-    audio.pause();
-    audio.currentTime = 0;
-  };
+  }
 
   const stopInterval = () => {
     clearInterval(intervalIdRef.current);
     intervalIdRef.current = null;
   };
-
+  
   const handleStartStop = () => {
     const timerLabel = document.getElementById("timer-label");
-
+    
     if (intervalIdRef.current === null) {
       let length = 60 * (isSession ? sessionLength : breakLength);
-      stopSound();
-
+      handleAudio("stop");
+      
       const id = setInterval(() => {
         if (length === 0) {
-          playSound();
-          setIsSession((prev) => !prev);
-          console.log(isSession);
-          setSessionNum((prev) => (isSession ? prev + 1 : prev));
-          length = 60 * (isSession ? breakLength : sessionLength);
-          if (isSession) {
-            timerLabel.classList.remove("border-bottom");
+          // handleAudio("play");
+          if (isSession) { 
+            // EXECUTES HERE.
             setDisplay("Break");
+            timerLabel.classList.remove("border-bottom");
+            setSessionNum((prev) => prev + 1);
+            length = 60 * breakLength;
+            setIsSession(false);
           } else {
+            // CAN'T EXECUTE HERE.
             setDisplay(`Session ${sessionNum}`);
             timerLabel.classList.add("border-bottom");
-            stopInterval();
+            length = 60 * breakLength;
+            setIsSession(true);
           }
+          stopInterval();
         } else {
           length -= 1;
         }
         updateDisplay(length);
       }, ms);
-      console.log("testi");
+
       intervalIdRef.current = id;
     } else {
       stopInterval();
