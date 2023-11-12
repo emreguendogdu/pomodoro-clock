@@ -5,8 +5,8 @@ import { Timer } from "./Timer";
 import { Footer } from "./Footer";
 
 const ms = 1000;
-const initBreakLength = 0;
-const initSessionLength = 0;
+const initBreakLength = 5;
+const initSessionLength = 25;
 
 function App() {
   const [breakLength, setBreakLength] = useState(initBreakLength);
@@ -54,23 +54,23 @@ function App() {
 
   const handleTimerLabel = (value) => {
     const timerLabel = document.getElementById("timer-label");
-    const labelContainer = document.getElementById('label-container');
+    const timerLabelP = document.querySelector("#timer-label p");
     switch (value) {
       case "break":
         setLabelDisplay("Break");
-        timerLabel.classList.remove("border-bottom");
+        timerLabelP.classList.remove("border-bottom");
         if (!document.querySelector(".break-span")) {
           const span = document.createElement("span");
           span.classList.add("break-span");
           span.innerText = `Next session: ${num}`;
-          labelContainer.appendChild(span);
+          timerLabel.appendChild(span);
         }
         return;
       case "session":
         if (document.querySelector(".break-span")) {
-        labelContainer.removeChild(document.querySelector(".break-span"));
+        timerLabel.removeChild(document.querySelector(".break-span"));
         }
-        timerLabel.classList.add("border-bottom");
+        timerLabelP.classList.add("border-bottom");
         return;
       default:
         return;
@@ -99,9 +99,9 @@ function App() {
     intervalIdRef.current = null;
   };
   
-let timerDuration = 60 * sessionLength;
-let timerStatus = "";
-let num = 1;
+  let timerDuration = 60 * sessionLength;
+  let timerStatus = "";
+  let num = 1;
 
   const handleStartStop = () => {
     // IntervalIDRef.current = stopped;
@@ -112,14 +112,14 @@ let num = 1;
         if (timerDuration === 0) {
             handleAudio("play");
           if (timerStatus !== "break") { 
-            num += 1;
-            timerDuration = breakLength * 60;
-            timerStatus = "break";
             handleTimerLabel("break");
+            timerDuration = breakLength * 60;
+            num += 1;
+            timerStatus = "break";
           } else {
-            timerDuration = sessionLength * 60;
-            handleTimerLabel("session");
             setLabelDisplay(`Session ${num}`);
+            handleTimerLabel("session");
+            timerDuration = sessionLength * 60;
             timerStatus = "session";
           }
         } else { // if timer isn't 0

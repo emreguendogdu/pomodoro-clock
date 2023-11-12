@@ -1,7 +1,7 @@
 $background: #544B3D;
 $text-color: #fff;
 $text-color: #4C8577;
-$text-color: lighten(#4E6E58, 40);
+$text-color: lighten(#71744B, 35);
 $background: #4B3C37;
 $app-border: .2rem solid lighten($background, 5);
 $highlight: #B39E57;
@@ -78,6 +78,7 @@ body {
             }
             .break-span {
                 display: block;
+                margin: 16px;
                 font-size: 1rem;
                 background-color: lighten($background, 5);
                 color: $text-color;

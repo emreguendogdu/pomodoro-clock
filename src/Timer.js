@@ -1,11 +1,9 @@
 export function Timer(props) {
     return (
         <div id="timer">
-          <div id="label-container">
-            <p id="timer-label" className="border-bottom">
-              {props.labelDisplay}
-            </p>
-          </div>
+            <div id="timer-label">
+              <p className="border-bottom">{props.labelDisplay}</p>
+            </div>
             <p id="time-left"></p>
             <audio id="beep" loop preload="auto">
               <source src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
