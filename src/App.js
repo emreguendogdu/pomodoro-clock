@@ -5,23 +5,27 @@ import { Timer } from "./Timer";
 import { Footer } from "./Footer";
 
 function App() {
+  // State hooks
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
   const [labelDisplay, setLabelDisplay] = useState("Session 1");
   const intervalIdRef = useRef(null);
 
+  // Format time in MM:SS
   const formatTime = (minutes, seconds) => {
     const formattedMinutes = String(minutes).padStart(2, "0");
     const formattedSeconds = String(seconds).padStart(2, "0");
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
+  // Update the display with the given length
   const updateDisplay = (length) => {
     const minutes = Math.floor(length / 60);
     const seconds = length % 60;
     document.getElementById("time-left").innerText = formatTime(minutes, seconds);
   };
 
+  // Handle click events on increment/decrement buttons
   const handleValue = (e) => {
     const [event, action] = e.target.id.split("-");
     
@@ -36,6 +40,7 @@ function App() {
     }
   };
 
+  // Reset all settings to default
   const handleReset = () => {
     stopInterval();
     handleAudio("stop");
@@ -47,98 +52,110 @@ function App() {
     handleTimerLabel("session");
   };
 
+  // Handle timer label display based on the given value
   const handleTimerLabel = (value) => {
     const timerLabel = document.getElementById("timer-label");
     const timerLabelP = document.querySelector("#timer-label p");
-    switch (value) {
-      case "break":
-        setLabelDisplay("Break");
-        timerLabelP.classList.remove("border-bottom");
-        if (!document.querySelector(".break-span")) {
-          const span = document.createElement("span");
-          span.classList.add("break-span");
-          span.innerText = `Next session: ${sessionNum}`;
-          timerLabel.appendChild(span);
-        }
-        return;
-      case "session":
-        if (document.querySelector(".break-span")) {
-        timerLabel.removeChild(document.querySelector(".break-span"));
-        }
-        timerLabelP.classList.add("border-bottom");
-        return;
-      default:
-        return;
-      }
-    }
 
+    if (value === "break") {
+      // Display "Break" label
+      setLabelDisplay("Break");
+      timerLabelP.classList.remove("border-bottom");
+      
+      // Display the next session information
+      if (!document.querySelector(".break-span")) {
+        const span = document.createElement("span");
+        span.classList.add("break-span");
+        span.innerText = `Next session: ${sessionNum}`;
+        timerLabel.appendChild(span);
+      }
+    } else if (value === "session") {
+      // Remove the next session information when returning to a session
+      if (document.querySelector(".break-span")) {
+        timerLabel.removeChild(document.querySelector(".break-span"));
+      }
+      timerLabelP.classList.add("border-bottom");
+    }
+  };
+
+  // Handle audio play and stop based on the given value
   const handleAudio = (value) => {
     const audio = document.getElementById("beep");
-    switch (value) {
-      case "play":
-        audio.play();
-        audio.playbackRate = 1.5;
-        setTimeout(() => (audio.loop = false), 1000);
-        return;
-      case "stop":
-        audio.pause();
-        audio.currentTime = 0;
-        return;
-      default:
-        return;
-    }
-  }
 
+    if (value === "play") {
+      // Play audio with increased playback rate and loop
+      audio.play();
+      audio.playbackRate = 1.5;
+      setTimeout(() => (audio.loop = false), 1000);
+    } else if (value === "stop") {
+      // Stop and reset audio
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  };
+
+  // Stop the running interval
   const stopInterval = () => {
     clearInterval(intervalIdRef.current);
     intervalIdRef.current = null;
   };
   
+  // Initializations
   let timerDuration = 60 * sessionLength;
-  let timerStatus = "";
   let sessionNum = 1;
-
+  let timerStatus;
+  // Handle start and stop of the timer
   const handleStartStop = () => {
-    // IntervalIDRef.current = stopped;
     if (intervalIdRef.current === null) {
       handleAudio("stop");
 
+      // Start the interval
       const id = setInterval(() => {
         if (timerDuration === 0) {
-            handleAudio("play");
+          // When timer reaches 0
+          handleAudio("play");
+
           if (timerStatus !== "break") { 
+            // Switch to break time
             handleTimerLabel("break");
             timerDuration = breakLength * 60;
             sessionNum += 1;
             timerStatus = "break";
           } else {
+            // Switch back to session time
             setLabelDisplay(`Session ${sessionNum}`);
             handleTimerLabel("session");
             timerDuration = sessionLength * 60;
             timerStatus = "session";
           }
-        } else { // if timer isn't 0
+        } else {
+          // Decrease the timer duration
           timerDuration -= 1;
         }
         updateDisplay(timerDuration);
       }, 1000);
-      // set timer to running 
+
+      // Set timer to running
       intervalIdRef.current = id;
-    } else  {  // Button click if timer running
+    } else  {  
+      // Stop the running interval if the timer is already running
       stopInterval();
     }
   };
 
+  // Update the display when the session length changes
   useEffect(() => {
     updateDisplay(sessionLength * 60);
   });
 
+  // Cleanup on component unmount
   useEffect(() => {
     return () => {
       clearInterval(intervalIdRef.current);
     };
   }, []);
 
+  // JSX rendering
   return (
     <>
       <div id="forest" />
