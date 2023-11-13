@@ -4,13 +4,9 @@ import { LengthControl } from "./LengthControl";
 import { Timer } from "./Timer";
 import { Footer } from "./Footer";
 
-const ms = 1000;
-const initBreakLength = 5;
-const initSessionLength = 25;
-
 function App() {
-  const [breakLength, setBreakLength] = useState(initBreakLength);
-  const [sessionLength, setSessionLength] = useState(initSessionLength);
+  const [breakLength, setBreakLength] = useState(5);
+  const [sessionLength, setSessionLength] = useState(25);
   const [labelDisplay, setLabelDisplay] = useState("Session 1");
   const intervalIdRef = useRef(null);
 
@@ -27,9 +23,8 @@ function App() {
   };
 
   const handleValue = (e) => {
-    const event = e.target.id.split("-")[0];
-    const action = e.target.id.split("-")[1];
-
+    const [event, action] = e.target.id.split("-");
+    
     if (action === undefined || event === undefined) return;
 
     const setLength = event === "break" ? setBreakLength : setSessionLength;
@@ -47,7 +42,7 @@ function App() {
     setBreakLength(5);
     setSessionLength(25);
     updateDisplay(25 * 60);
-    num = 1;
+    sessionNum = 1;
     setLabelDisplay(`Session 1`);
     handleTimerLabel("session");
   };
@@ -62,7 +57,7 @@ function App() {
         if (!document.querySelector(".break-span")) {
           const span = document.createElement("span");
           span.classList.add("break-span");
-          span.innerText = `Next session: ${num}`;
+          span.innerText = `Next session: ${sessionNum}`;
           timerLabel.appendChild(span);
         }
         return;
@@ -101,7 +96,7 @@ function App() {
   
   let timerDuration = 60 * sessionLength;
   let timerStatus = "";
-  let num = 1;
+  let sessionNum = 1;
 
   const handleStartStop = () => {
     // IntervalIDRef.current = stopped;
@@ -114,10 +109,10 @@ function App() {
           if (timerStatus !== "break") { 
             handleTimerLabel("break");
             timerDuration = breakLength * 60;
-            num += 1;
+            sessionNum += 1;
             timerStatus = "break";
           } else {
-            setLabelDisplay(`Session ${num}`);
+            setLabelDisplay(`Session ${sessionNum}`);
             handleTimerLabel("session");
             timerDuration = sessionLength * 60;
             timerStatus = "session";
@@ -126,7 +121,7 @@ function App() {
           timerDuration -= 1;
         }
         updateDisplay(timerDuration);
-      }, ms);
+      }, 1000);
       // set timer to running 
       intervalIdRef.current = id;
     } else  {  // Button click if timer running
@@ -135,9 +130,7 @@ function App() {
   };
 
   useEffect(() => {
-    const minutes = sessionLength;
-    const seconds = 0;
-    updateDisplay(minutes * 60 + seconds);
+    updateDisplay(sessionLength * 60);
   });
 
   useEffect(() => {
