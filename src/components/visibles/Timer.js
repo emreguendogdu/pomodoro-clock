@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./App.scss";
-import { LengthControl } from "./components/visibles/LengthControl";
-import { TimerDisplay } from "./components/visibles/TimerDisplay";
-import { handleAudio } from "./components/AudioPlayer";
+import { LengthControl } from "./LengthControl";
+import { TimerDisplay } from "./TimerDisplay";
+import { handleAudio } from "../AudioPlayer";
 
 export function Timer() {
   // State hooks

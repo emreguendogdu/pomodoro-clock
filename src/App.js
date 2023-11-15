@@ -1,6 +1,6 @@
 import "./App.scss";
 import { Footer } from "./components/visibles/Footer";
-import { Timer } from "./Timer";
+import { Timer } from "./components/visibles/Timer";
 
 function App() {
   return (
