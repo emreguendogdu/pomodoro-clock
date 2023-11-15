@@ -1,9 +1,6 @@
-$background: #544B3D;
-$text-color: #fff;
-$text-color: #4C8577;
+$app-border: .2rem solid lighten($background, 5);
 $text-color: lighten(#71744B, 35);
 $background: #4B3C37;
-$app-border: .2rem solid lighten($background, 5);
 $highlight: #B39E57;
 
 * {
@@ -11,9 +8,12 @@ $highlight: #B39E57;
     padding: 0;
 }
 
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
 body {
-    margin: 0;
-    padding: 0;
     background-color: $background;
     font-family: 'Montserrat', sans-serif;
     #forest {
@@ -24,19 +24,16 @@ body {
         height: 60vh;
         background-image: url("./forest2.webp");
         background-size: cover;
-        border-bottom: .2rem solid lighten($background, 10);
+        border-bottom: 3px solid lighten($background, 10);
         border-radius: 0 0 4% 4%;
         z-index: -1;
     }
     #app-container {
+        @include flex-center;
         padding-top: 8rem;
-        display: flex;
-        text-align: center;
-        justify-content: center;
         #app {
-            display: flex;
+            @include flex-center;
             flex-direction: column;
-            text-align: center;
             background-color: $background;
             min-width: 30vw;
             font-size: 3rem;
@@ -47,9 +44,9 @@ body {
                 margin: 10px;
                 padding: 16px;
                 transition: 500ms;
-            }
-            p:hover {
-                color: $highlight;
+                &:hover, &:active {
+                    color: $highlight;
+                }
             }
             #break-length, #session-length {
                 padding: 0 16px;
@@ -68,13 +65,13 @@ body {
                 border-radius: 8px;
                 background-color: lighten($background, 5);
                 color: $text-color;
-                font-size: 16px;
+                font-size: 1rem;
                 cursor: pointer;
                 transition: 400ms;
-            }
-            button:hover {
-                background-color: darken($background, 2);
-                color: $highlight;
+                &:hover {
+                    background-color: darken($background, 2);
+                    color: $highlight;
+                }
             }
             .break-span {
                 display: block;
@@ -83,35 +80,34 @@ body {
                 background-color: lighten($background, 5);
                 color: $text-color;
             }
+            .length-container {
+                @include flex-center;
+                p {
+                    font-size: 2rem;
+                }
+            }
         }
     }
-.length-container {
-    display: flex;
-    p {
-        font-size: 2rem;
+    .highlight {
+        color: $highlight;
     }
-}
-.highlight {
-    color: $highlight;
-}
     footer {
         padding-top: 10px; 
         width: 100vw;
-        display: flex;
-        justify-content: center;
-        text-align: center;
+        @include flex-center;
         a {
             text-decoration: none;
             color: $text-color;
             transition: 800ms;
+            cursor: pointer;
+            &:hover {
+                cursor: pointer;
+                color: $highlight;
+                font-size: 1.2rem;
+            }
             i {
                     padding: 0 5px;
             }
         }
-        a:hover {
-            color: $highlight;
-            font-size: 1.5rem;
-        }
-        
     }
-}
+    }
