@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { LengthControl } from "./LengthControl";
 import { TimerDisplay } from "./TimerDisplay";
 import { handleAudio } from "../AudioPlayer";
+import { TimerPreset } from "./TimerPreset";
 
 export function Timer() {
   // State hooks
@@ -24,20 +25,19 @@ export function Timer() {
     document.getElementById("time-left").innerText = formatTime(minutes, seconds);
   };
 
-  // Handle click events on increment/decrement buttons
-  const handleValue = (e) => {
-    const [event, action] = e.target.id.split("-");
-    
-    if (action === undefined || event === undefined) return;
+  const sessionIncrement = () => {
+    setSessionLength(prev => prev < 60 ? prev + 1 : prev)
+  }
+  const sessionDecrement = () => {
+    setSessionLength(prev => prev > 1 ? prev - 1 : prev)
+  }
 
-    const setLength = event === "break" ? setBreakLength : setSessionLength;
-
-    if (action === "increment") {
-      setLength((prev) => (prev < 60 ? prev + 1 : prev));
-    } else if (action === "decrement") {
-      setLength((prev) => (prev > 1 ? prev - 1 : prev));
-    }
-  };
+  const breakIncrement = () => {
+    setBreakLength(prev => prev < 60 ? prev + 1 : prev)
+  }
+  const breakDecrement = () => {
+    setBreakLength(prev => prev > 1 ? prev - 1 : prev)
+  }
 
   // Reset all settings to default
   const handleReset = () => {
@@ -102,6 +102,9 @@ export function Timer() {
 
       // Start the interval
       const id = setInterval(() => {
+        const timerDisplay = document.getElementById("time-left");
+        timerDisplay.classList.add("highlight");
+        setTimeout(() => timerDisplay.classList.remove("highlight"), 1000);
         if (timerDuration === 0) {
           // When timer reaches 0
           handleAudio("play");
@@ -153,8 +156,14 @@ export function Timer() {
             handleReset={handleReset}
             />
             <div className="length-container">
-            <LengthControl event="break" length={breakLength} handleValue={handleValue} />
-            <LengthControl event="session" length={sessionLength} handleValue={handleValue} />
+            <LengthControl event="session" length={sessionLength} handleIncrement={sessionIncrement} handleDecrement={sessionDecrement} />
+            <LengthControl event="break" length={breakLength} handleIncrement={breakIncrement} handleDecrement={breakDecrement} />
+            </div>
+            <div className="presets-container">
+              <p>Presets <i class="fa fa-caret-down" aria-hidden="true" /></p>
+              <TimerPreset s="50" b="10" setS={setSessionLength} setB={setBreakLength}/>
+              <TimerPreset s="60" b="10" setS={setSessionLength} setB={setBreakLength}/>
+              <TimerPreset s="25" b="5" setS={setSessionLength} setB={setBreakLength}/>
             </div>
         </div>
     </>

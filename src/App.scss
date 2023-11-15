@@ -87,6 +87,21 @@ body {
                     font-size: 2rem;
                 }
             }
+            .presets-container {
+                cursor: pointer;
+                p {
+                    font-size: 1.2rem;
+                    padding: 0;
+                }
+                button {
+                    display: none;
+                }
+                &:hover {
+                    button {
+                        display: inline;
+                    }
+                }
+            }
         }
     }
     .highlight {
