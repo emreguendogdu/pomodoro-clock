@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./App.scss";
-import { LengthControl } from "./LengthControl";
-import { Timer } from "./Timer";
-import { Footer } from "./Footer";
+import { LengthControl } from "./components/visibles/LengthControl";
+import { TimerDisplay } from "./components/visibles/TimerDisplay";
+import { Footer } from "./components/visibles/Footer";
+import { handleAudio } from "./components/AudioPlayer";
 
 function App() {
   // State hooks
@@ -17,7 +18,7 @@ function App() {
     const formattedSeconds = String(seconds).padStart(2, "0");
     return `${formattedMinutes}:${formattedSeconds}`;
   };
-
+  
   // Update the display with the given length
   const updateDisplay = (length) => {
     const minutes = Math.floor(length / 60);
@@ -75,22 +76,6 @@ function App() {
         timerLabel.removeChild(document.querySelector(".break-span"));
       }
       timerLabelP.classList.add("border-bottom");
-    }
-  };
-
-  // Handle audio play and stop based on the given value
-  const handleAudio = (value) => {
-    const audio = document.getElementById("beep");
-
-    if (value === "play") {
-      // Play audio with increased playback rate and loop
-      audio.play();
-      audio.playbackRate = 1.5;
-      setTimeout(() => (audio.loop = false), 1000);
-    } else if (value === "stop") {
-      // Stop and reset audio
-      audio.pause();
-      audio.currentTime = 0;
     }
   };
 
@@ -161,7 +146,7 @@ function App() {
       <div id="forest" />
       <div id="app-container">
         <div id="app">
-          <Timer
+          <TimerDisplay
             labelDisplay={labelDisplay}
             handleStartStop={handleStartStop}
             handleReset={handleReset}

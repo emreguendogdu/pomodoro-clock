@@ -13,6 +13,11 @@ $highlight: #B39E57;
     justify-content: center;
     text-align: center;
 }
+@mixin color-bgcolor($color, $bg) {
+    color: $color;
+    background: $bg;
+}
+
 body {
     background-color: $background;
     font-family: 'Montserrat', sans-serif;
@@ -22,7 +27,7 @@ body {
         left: 0;
         width: 100vw;
         height: 60vh;
-        background-image: url("./forest2.webp");
+        background-image: url("./assets/forest2.webp");
         background-size: cover;
         border-bottom: 3px solid lighten($background, 10);
         border-radius: 0 0 4% 4%;
@@ -33,13 +38,12 @@ body {
         padding-top: 8rem;
         #app {
             @include flex-center;
+            @include color-bgcolor($text-color, $background);
             flex-direction: column;
-            background-color: $background;
             min-width: 30vw;
             font-size: 3rem;
             border: $app-border;
             border-radius: 8%;
-            color: $text-color;
             p {
                 margin: 10px;
                 padding: 16px;
@@ -59,26 +63,23 @@ body {
                 border-bottom: 10px solid lighten($background, 5);
             }
             button {
+                @include color-bgcolor($text-color, lighten($background, 5));
                 margin: 16px;
                 padding: 8px 16px;
                 border: 1px solid black;
                 border-radius: 8px;
-                background-color: lighten($background, 5);
-                color: $text-color;
                 font-size: 1rem;
                 cursor: pointer;
                 transition: 400ms;
                 &:hover {
-                    background-color: darken($background, 2);
-                    color: $highlight;
+                    @include color-bgcolor($highlight, darken($background, 2));
                 }
             }
             .break-span {
+                @include color-bgcolor($text-color, lighten($background, 5));
                 display: block;
                 margin: 16px;
                 font-size: 1rem;
-                background-color: lighten($background, 5);
-                color: $text-color;
             }
             .length-container {
                 @include flex-center;

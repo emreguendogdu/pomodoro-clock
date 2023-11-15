@@ -1,4 +1,4 @@
-export function Timer(props) {
+export function TimerDisplay(props) {
     return (
         <div id="timer">
             <div id="timer-label">
