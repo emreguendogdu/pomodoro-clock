@@ -1,11 +1,25 @@
 import React from "react";
-import { TimerPreset } from "./TimerPreset";
 
 export default function TimerPresets(props) {
   function showPresets() {
     document.getElementById("presets-container").style.opacity = "1";
     document.getElementById("presets-container").style.height = "auto";
   }
+  const TimerPreset = (props) => {
+    return (
+      <>
+        <button
+          id={`${props.s}-${props.b}-preset`}
+          onClick={() => {
+            props.setS(props.s);
+            props.setB(props.b);
+          }}
+        >
+          {props.s}-{props.b}
+        </button>
+      </>
+    );
+  };
   return (
     <section id="presets-section">
       <p onMouseOver={() => showPresets()}>
