@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { LengthControl } from "./LengthControl";
 import { TimerDisplay } from "./TimerDisplay";
 import { handleAudio } from "../AudioPlayer";
-import { TimerPreset } from "./TimerPreset";
+import TimerPresets from "./TimerPresets";
 
 export function Timer() {
   // State hooks
@@ -22,30 +22,35 @@ export function Timer() {
   const updateDisplay = (length) => {
     const minutes = Math.floor(length / 60);
     const seconds = length % 60;
-    document.getElementById("time-left").innerText = formatTime(minutes, seconds);
+    document.getElementById("time-left").innerText = formatTime(
+      minutes,
+      seconds
+    );
   };
 
   const sessionIncrement = () => {
-    setSessionLength(prev => prev < 60 ? prev + 1 : prev)
-  }
+    setSessionLength((prev) => (prev < 60 ? prev + 1 : prev));
+  };
   const sessionDecrement = () => {
-    setSessionLength(prev => prev > 1 ? prev - 1 : prev)
-  }
+    setSessionLength((prev) => (prev > 1 ? prev - 1 : prev));
+  };
 
   const breakIncrement = () => {
-    setBreakLength(prev => prev < 60 ? prev + 1 : prev)
-  }
+    setBreakLength((prev) => (prev < 60 ? prev + 1 : prev));
+  };
   const breakDecrement = () => {
-    setBreakLength(prev => prev > 1 ? prev - 1 : prev)
-  }
+    setBreakLength((prev) => (prev > 1 ? prev - 1 : prev));
+  };
 
   // Reset all settings to default
-  const handleReset = () => {
+  const resetTimer = () => {
+    const defaultSessionLength = 25;
     stopInterval();
     handleAudio("stop");
     setBreakLength(5);
-    setSessionLength(25);
-    updateDisplay(25 * 60);
+    setSessionLength(defaultSessionLength);
+    updateDisplay(defaultSessionLength * 60);
+    timerDuration = defaultSessionLength * 60;
     sessionNum = 1;
     setLabelDisplay("Session 1");
     handleTimerLabel("reset");
@@ -60,7 +65,7 @@ export function Timer() {
       // Display "Break" label
       setLabelDisplay("Break");
       timerLabelP.classList.remove("border-bottom");
-      
+
       // Display the next session information
       if (!document.querySelector(".break-span")) {
         const span = document.createElement("span");
@@ -75,8 +80,7 @@ export function Timer() {
       }
       setLabelDisplay(`Session ${sessionNum}`);
       timerLabelP.classList.add("border-bottom");
-    }
-    else if (value === "reset") {
+    } else if (value === "reset") {
       // Remove the next session information when returning to a session
       if (document.querySelector(".break-span")) {
         timerLabel.removeChild(document.querySelector(".break-span"));
@@ -90,11 +94,12 @@ export function Timer() {
     clearInterval(intervalIdRef.current);
     intervalIdRef.current = null;
   };
-  
+
   // Initializations
   let timerDuration = 60 * sessionLength;
   let sessionNum = 1;
   let timerStatus;
+
   // Handle start and stop of the timer
   const handleStartStop = () => {
     if (intervalIdRef.current === null) {
@@ -109,7 +114,7 @@ export function Timer() {
           // When timer reaches 0
           handleAudio("play");
 
-          if (timerStatus !== "break") { 
+          if (timerStatus !== "break") {
             // Switch to break time
             handleTimerLabel("break");
             timerDuration = breakLength * 60;
@@ -130,7 +135,7 @@ export function Timer() {
 
       // Set timer to running
       intervalIdRef.current = id;
-    } else  {  
+    } else {
       // Stop the running interval if the timer is already running
       stopInterval();
     }
@@ -147,25 +152,30 @@ export function Timer() {
       clearInterval(intervalIdRef.current);
     };
   }, []);
-    return (
+  return (
     <>
-        <div id="app">
-            <TimerDisplay
-            labelDisplay={labelDisplay}
-            handleStartStop={handleStartStop}
-            handleReset={handleReset}
-            />
-            <div className="length-container">
-            <LengthControl event="session" length={sessionLength} handleIncrement={sessionIncrement} handleDecrement={sessionDecrement} />
-            <LengthControl event="break" length={breakLength} handleIncrement={breakIncrement} handleDecrement={breakDecrement} />
-            </div>
-            <div className="presets-container">
-              <p>Presets <i class="fa fa-caret-down" aria-hidden="true" /></p>
-              <TimerPreset s="50" b="10" setS={setSessionLength} setB={setBreakLength}/>
-              <TimerPreset s="60" b="10" setS={setSessionLength} setB={setBreakLength}/>
-              <TimerPreset s="25" b="5" setS={setSessionLength} setB={setBreakLength}/>
-            </div>
+      <div id="app">
+        <TimerDisplay
+          labelDisplay={labelDisplay}
+          handleStartStop={handleStartStop}
+          handleReset={resetTimer}
+        />
+        <div className="length-container">
+          <LengthControl
+            event="session"
+            length={sessionLength}
+            handleIncrement={sessionIncrement}
+            handleDecrement={sessionDecrement}
+          />
+          <LengthControl
+            event="break"
+            length={breakLength}
+            handleIncrement={breakIncrement}
+            handleDecrement={breakDecrement}
+          />
         </div>
+        <TimerPresets setSession={setSessionLength} setBreak={setBreakLength} />
+      </div>
     </>
   );
 }

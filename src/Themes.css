@@ -1,0 +1,19 @@
+.forest {
+  background-image: url("./assets/forest2.webp");
+  --background: #4b3c37;
+  --background-secondary: #534540;
+  --text-color: #c6c8ad;
+  --app-border: 0.2rem solid #534540;
+  --highlight: #b39e57;
+}
+
+.space {
+  background-image: url("./assets/space_theme.jpg");
+  background-size: cover;
+  --background: black;
+  --text-color: white;
+}
+
+body {
+    background-color: var(--background);
+}
