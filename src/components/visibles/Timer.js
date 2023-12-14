@@ -5,7 +5,6 @@ import { handleAudio } from "../AudioPlayer";
 import TimerPresets from "./TimerPresets";
 
 export function Timer() {
-  // State hooks
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
   const [labelDisplay, setLabelDisplay] = useState("Session 1");

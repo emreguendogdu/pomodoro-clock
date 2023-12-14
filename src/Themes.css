@@ -1,26 +1,27 @@
-.forest {
+:root[color-scheme="forest"] {
   --background-image: url("./assets/forest2.webp");
   --background: #4b3c37;
   --background-secondary: #534540;
   --text-color: #c6c8ad;
-  --app-border: 0.2rem solid var(--background-secondary);
   --highlight: #b39e57;
+  --app-border: 0.2rem solid var(--background-secondary);
 }
 
-.space {
+:root[color-scheme="space"] {
   --background-image: url("./assets/space_theme.jpg");
+  background-size: cover;
+
   --background: #19120d;
   --background-secondary: #2d2725;
-  --app-border: 0.2rem solid var(--background-secondary);
-  --highlight: #e19454;
-  background-size: cover;
-  background-position: bottom;
   --text-color: #cecece;
+  --highlight: #e19454;
+  --app-border: 0.2rem solid var(--background-secondary);
 }
 
 body {
   background-color: var(--background);
   color: var(--text-color);
+  background-position: bottom;
 }
 
 #background-container {
