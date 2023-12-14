@@ -1,3 +1,5 @@
+$transition: 800ms;
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +12,7 @@
 
 body {
   font-family: "Montserrat", sans-serif;
+  transition: $transition;
   #background-container {
     position: absolute;
     top: 0;
@@ -19,6 +22,7 @@ body {
     background-size: cover;
     border-radius: 0 0 4% 4%;
     z-index: -1;
+    transition: ($transition*1.5) ease-in-out;
   }
   #app-container {
     @include flex-center;
@@ -32,7 +36,7 @@ body {
       p {
         margin: 10px;
         padding: 16px;
-        transition: 500ms;
+        transition: $transition;
       }
       #break-length,
       #session-length {
@@ -51,7 +55,7 @@ body {
         border-radius: 8px;
         font-size: 1rem;
         cursor: pointer;
-        transition: 400ms;
+        transition: $transition;
       }
       .break-span {
         display: block;
@@ -76,7 +80,7 @@ body {
           cursor: pointer;
           height: 0;
           opacity: 0;
-          transition: 400ms;
+          transition: $transition;
         }
       }
     }
@@ -85,7 +89,7 @@ body {
     padding-top: 10px;
     @include flex-center;
     * {
-      transition: 800ms;
+      transition: $transition;
     }
     a {
       text-decoration: none;
