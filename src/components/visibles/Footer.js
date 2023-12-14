@@ -1,11 +1,14 @@
+import { useCallback } from "react";
+
 export const Footer = (props) => {
-  const ThemeChanger = () => {
+  const ThemeChanger = useCallback(() => {
     if (props.bg === "forest") {
       props.handlers.setSpace();
     } else {
       props.handlers.setForest();
     }
-  };
+  }, [props.bg, props.handlers]);
+
   return (
     <footer>
       <a
@@ -16,8 +19,8 @@ export const Footer = (props) => {
         <i className="fa fa-github" />
         emreguendogdu
       </a>
-      <button id="theme-switch-button" onClick={() => ThemeChanger()}>
-        Space Theme
+      <button id="theme-switch-button" onClick={ThemeChanger}>
+        Change Theme
       </button>
     </footer>
   );

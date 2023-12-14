@@ -1,4 +1,5 @@
 import "./App.scss";
+import "./Themes.css";
 import { Footer } from "./components/visibles/Footer";
 import { Timer } from "./components/visibles/Timer";
 import { useState } from "react";
@@ -6,8 +7,14 @@ import { useState } from "react";
 function App() {
   const [background, setBackground] = useState("forest");
   const backgroundChangeHandlers = {
-    setForest: () => setBackground("forest"),
-    setSpace: () => setBackground("space"),
+    setForest: () => {
+      setBackground("forest");
+      document.body.classList.replace("space", "forest");
+    },
+    setSpace: () => {
+      setBackground("space");
+      document.body.classList.replace("forest", "space");
+    },
   };
   return (
     <>

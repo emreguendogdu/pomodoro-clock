@@ -1,19 +1,68 @@
 .forest {
-  background-image: url("./assets/forest2.webp");
+  --background-image: url("./assets/forest2.webp");
   --background: #4b3c37;
   --background-secondary: #534540;
   --text-color: #c6c8ad;
-  --app-border: 0.2rem solid #534540;
+  --app-border: 0.2rem solid var(--background-secondary);
   --highlight: #b39e57;
 }
 
 .space {
-  background-image: url("./assets/space_theme.jpg");
+  --background-image: url("./assets/space_theme.jpg");
+  --background: #19120d;
+  --background-secondary: #2d2725;
+  --app-border: 0.2rem solid var(--background-secondary);
+  --highlight: #e19454;
   background-size: cover;
-  --background: black;
-  --text-color: white;
+  background-position: bottom;
+  --text-color: #cecece;
 }
 
 body {
-    background-color: var(--background);
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+#background-container {
+  background-image: var(--background-image);
+  border-bottom: var(--app-border);
+}
+
+#app {
+  background-color: var(--background);
+  border: var(--app-border);
+}
+
+#app p:hover {
+  color: var(--highlight);
+}
+
+.border-bottom {
+  border-bottom: 10px solid var(--background-secondary);
+}
+
+#app button {
+  color: var(--text-color);
+  background-color: var(--background-secondary);
+}
+#app button:hover {
+  background-color: var(--background);
+}
+.break-span {
+  color: var(--text-color);
+  background-color: var(--background-secondary);
+}
+.highlight {
+  color: var(--highlight);
+}
+footer a {
+  color: var(--text-color);
+}
+#theme-switch-button {
+  color: var(--text-color);
+  background-color: var(--background);
+}
+footer a:hover,
+#theme-switch-button:hover {
+  color: var(--highlight);
 }

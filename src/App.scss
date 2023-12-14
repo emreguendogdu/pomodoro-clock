@@ -1,43 +1,14 @@
-$background: #4b3c37;
-$text-color: lighten(#71744b, 35);
-$app-border: 0.2rem solid lighten($background, 5);
-$highlight: #b39e57;
-
-:root {
-  --background: #4b3c37;
-  --background-secondary: #534540;
-  --text-color: #c6c8ad;
-  --app-border: 0.2rem solid #534540;
-}
-
 * {
   margin: 0;
   padding: 0;
 }
-.forest {
-  background-image: url("./assets/forest2.webp");
-  --background: #4b3c37;
-}
-
-.space {
-  background-image: url("./assets/space_theme.jpg");
-  background-size: cover;
-  --background: black;
-  $text-color: white;
-}
-
 @mixin flex-center {
   display: flex;
   justify-content: center;
   text-align: center;
 }
-@mixin color-bgcolor($color, $bg) {
-  color: $color;
-  background: $bg;
-}
 
 body {
-  background-color: var(--background);
   font-family: "Montserrat", sans-serif;
   #background-container {
     position: absolute;
@@ -46,7 +17,6 @@ body {
     width: 100vw;
     height: 60vh;
     background-size: cover;
-    border-bottom: var(--app-border);
     border-radius: 0 0 4% 4%;
     z-index: -1;
   }
@@ -55,20 +25,14 @@ body {
     padding-top: 8rem;
     #app {
       @include flex-center;
-      @include color-bgcolor(var(--text-color), var(--background));
       flex-direction: column;
       min-width: 30vw;
       font-size: 3rem;
-      border: var(--app-border);
       border-radius: 8%;
       p {
         margin: 10px;
         padding: 16px;
         transition: 500ms;
-        &:hover,
-        &:active {
-          color: $highlight;
-        }
       }
       #break-length,
       #session-length {
@@ -80,11 +44,7 @@ body {
       #timer-label {
         text-transform: capitalize;
       }
-      .border-bottom {
-        border-bottom: 10px solid var(--background-secondary);
-      }
       button {
-        @include color-bgcolor(var(--text-color), var(--background-secondary));
         margin: 16px;
         padding: 8px 16px;
         border: 1px solid black;
@@ -92,12 +52,8 @@ body {
         font-size: 1rem;
         cursor: pointer;
         transition: 400ms;
-        &:hover {
-          @include color-bgcolor($highlight, darken($background, 2));
-        }
       }
       .break-span {
-        @include color-bgcolor(var(--text-color), var(--background-secondary));
         display: block;
         margin: 16px;
         font-size: 1rem;
@@ -125,31 +81,21 @@ body {
       }
     }
   }
-  .highlight {
-    color: $highlight;
-  }
   footer {
     padding-top: 10px;
-
     @include flex-center;
+    * {
+      transition: 800ms;
+    }
     a {
       text-decoration: none;
-      color: var(--text-color);
-      transition: 800ms;
-      cursor: pointer;
-      &:hover {
-        cursor: pointer;
-        color: $highlight;
-        font-size: 1.2rem;
-      }
       i {
         padding: 0 5px;
       }
     }
     #theme-switch-button {
-      @include color-bgcolor(var(--text-color), var(--background));
-      border: none;
       cursor: pointer;
+      border: 0;
       margin-left: 50px;
     }
   }
