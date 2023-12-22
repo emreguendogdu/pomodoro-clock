@@ -27,6 +27,7 @@ body {
 #background-container {
   background-image: var(--background-image);
   border-bottom: var(--app-border);
+  background-position: bottom;
 }
 
 #app {
