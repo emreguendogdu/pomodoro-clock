@@ -153,28 +153,26 @@ export function Timer() {
   }, [])
   return (
     <>
-      <div id="app">
-        <TimerDisplay
-          labelDisplay={labelDisplay}
-          handleStartStop={handleStartStop}
-          handleReset={resetTimer}
+      <TimerDisplay
+        labelDisplay={labelDisplay}
+        handleStartStop={handleStartStop}
+        handleReset={resetTimer}
+      />
+      <div className="length-container">
+        <LengthControl
+          event="session"
+          length={sessionLength}
+          handleIncrement={sessionIncrement}
+          handleDecrement={sessionDecrement}
         />
-        <div className="length-container">
-          <LengthControl
-            event="session"
-            length={sessionLength}
-            handleIncrement={sessionIncrement}
-            handleDecrement={sessionDecrement}
-          />
-          <LengthControl
-            event="break"
-            length={breakLength}
-            handleIncrement={breakIncrement}
-            handleDecrement={breakDecrement}
-          />
-        </div>
-        <TimerPresets setSession={setSessionLength} setBreak={setBreakLength} />
+        <LengthControl
+          event="break"
+          length={breakLength}
+          handleIncrement={breakIncrement}
+          handleDecrement={breakDecrement}
+        />
       </div>
+      <TimerPresets setSession={setSessionLength} setBreak={setBreakLength} />
     </>
   )
 }

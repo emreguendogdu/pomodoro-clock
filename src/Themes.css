@@ -10,24 +10,22 @@
 :root[color-scheme="space"] {
   --background-image: url("./assets/space_theme.jpg");
   background-size: cover;
-
   --background: #19120d;
   --background-secondary: #2d2725;
   --text-color: #cecece;
-  --highlight: #e19454;
+  --highlight: hsl(233, 23%, 65%);
   --app-border: 0.2rem solid var(--background-secondary);
 }
 
 body {
   background-color: var(--background);
   color: var(--text-color);
-  background-position: bottom;
 }
 
 #background-container {
   background-image: var(--background-image);
   border-bottom: var(--app-border);
-  background-position: bottom;
+  background-position: center;
 }
 
 #app {
@@ -48,7 +46,8 @@ body {
   background-color: var(--background-secondary);
 }
 #app button:hover {
-  background-color: var(--background);
+  background-color: var(--text-color);
+  color: var(--background);
 }
 .break-span {
   color: var(--text-color);
