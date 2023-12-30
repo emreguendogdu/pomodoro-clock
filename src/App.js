@@ -1,7 +1,7 @@
 import "./App.scss"
 import "./Themes.css"
 import { Footer } from "./components/visibles/Footer"
-import Tasks from "./components/visibles/Tasks/Tasks"
+// import Tasks from "./components/visibles/Tasks/Tasks"
 import { Timer } from "./components/visibles/Timer"
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
       <div id="app-container">
         <div id="app">
           <Timer />
-          <Tasks />
+          {/* <Tasks /> */}
         </div>
       </div>
       <Footer />

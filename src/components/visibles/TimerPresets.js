@@ -28,20 +28,23 @@ export default function TimerPresets(props) {
             props.setB(props.b)
           }}
         >
-          {props.s}-{props.b}
+          {props.s} - {props.b}
         </button>
       </>
     )
   }
   return (
     <section id="presets-section">
-      <p
-        onMouseOver={() => showPresets()}
-        onClick={() => hideShowPresets()}
-      >
+      <p onMouseOver={() => showPresets()} onClick={() => hideShowPresets()}>
         Presets <i className="fa fa-caret-down" aria-hidden="true" />
       </p>
       <div id="presets-container">
+        <TimerPreset
+          s="25"
+          b="5"
+          setS={props.setSession}
+          setB={props.setBreak}
+        />
         <TimerPreset
           s="50"
           b="10"
@@ -55,8 +58,8 @@ export default function TimerPresets(props) {
           setB={props.setBreak}
         />
         <TimerPreset
-          s="25"
-          b="5"
+          s="90"
+          b="10"
           setS={props.setSession}
           setB={props.setBreak}
         />

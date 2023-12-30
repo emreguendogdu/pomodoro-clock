@@ -17,7 +17,6 @@ export function Timer() {
     return `${formattedMinutes}:${formattedSeconds}`
   }
 
-  // Update the display with the given length
   const updateDisplay = (length) => {
     const minutes = Math.floor(length / 60)
     const seconds = length % 60
@@ -69,7 +68,7 @@ export function Timer() {
       if (!document.querySelector(".break-span")) {
         const span = document.createElement("span")
         span.classList.add("break-span")
-        span.innerText = `Next session: ${sessionNum}`
+        span.innerText = `Next session: ${sessionNum + 1}`
         timerLabel.appendChild(span)
       }
     } else if (value === "session") {
@@ -108,7 +107,7 @@ export function Timer() {
       const id = setInterval(() => {
         const timerDisplay = document.getElementById("time-left")
         timerDisplay.classList.add("highlight")
-        setTimeout(() => timerDisplay.classList.remove("highlight"), 1000)
+        setTimeout(() => timerDisplay.classList.remove("highlight"), 500)
         if (timerDuration === 0) {
           // When timer reaches 0
           handleAudio("play")
