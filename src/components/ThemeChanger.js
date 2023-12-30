@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 
 export default function ThemeChanger() {
-  const [theme, setTheme] = useState("forest");
+  const [theme, setTheme] = useState("forest")
 
   useEffect(() => {
-    document.documentElement.setAttribute("color-scheme", theme);
-  }, [theme]);
+    document.documentElement.setAttribute("color-scheme", theme)
+  }, [theme])
 
   return (
     <>
@@ -16,5 +16,5 @@ export default function ThemeChanger() {
         Switch theme
       </button>
     </>
-  );
+  )
 }

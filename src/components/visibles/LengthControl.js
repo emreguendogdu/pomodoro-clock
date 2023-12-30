@@ -12,5 +12,5 @@ export function LengthControl(props) {
         <i className="fa fa-arrow-up" />
       </button>
     </div>
-  );
+  )
 }

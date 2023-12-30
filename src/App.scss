@@ -22,7 +22,7 @@ body {
     background-size: cover;
     border-radius: 0 0 4% 4%;
     z-index: -1;
-    transition: ($transition*1.5) ease-in-out;
+    transition: ($transition * 1.5) ease-in-out;
   }
   #app-container {
     @include flex-center;

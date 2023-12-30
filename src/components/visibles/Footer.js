@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-import ThemeChanger from "../ThemeChanger";
+import { useCallback } from "react"
+import ThemeChanger from "../ThemeChanger"
 
 export const Footer = () => {
   return (
@@ -12,7 +12,7 @@ export const Footer = () => {
         <i className="fa fa-github" />
         emreguendogdu
       </a>
-      <ThemeChanger/>
+      <ThemeChanger />
     </footer>
-  );
-};
+  )
+}

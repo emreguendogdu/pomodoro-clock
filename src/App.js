@@ -1,7 +1,7 @@
-import "./App.scss";
-import "./Themes.css";
-import { Footer } from "./components/visibles/Footer";
-import { Timer } from "./components/visibles/Timer";
+import "./App.scss"
+import "./Themes.css"
+import { Footer } from "./components/visibles/Footer"
+import { Timer } from "./components/visibles/Timer"
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       </div>
       <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
