@@ -58,6 +58,7 @@ export function Timer() {
   const handleTimerLabel = (value) => {
     const timerLabel = document.getElementById("timer-label")
     const timerLabelP = document.querySelector("#timer-label p")
+    const breakSpan = document.querySelector(".break-span")
 
     if (value === "break") {
       // Display "Break" label
@@ -65,24 +66,17 @@ export function Timer() {
       timerLabelP.classList.remove("border-bottom")
 
       // Display the next session information
-      if (!document.querySelector(".break-span")) {
+      if (!breakSpan) {
         const span = document.createElement("span")
         span.classList.add("break-span")
         span.innerText = `Next session: ${sessionNum + 1}`
         timerLabel.appendChild(span)
       }
-    } else if (value === "session") {
-      // Remove the next session information when returning to a session
-      if (document.querySelector(".break-span")) {
-        timerLabel.removeChild(document.querySelector(".break-span"))
+    } else if (value === "session" || value === "reset") {
+      if (breakSpan) {
+        timerLabel.removeChild(breakSpan)
       }
       setLabelDisplay(`Session ${sessionNum}`)
-      timerLabelP.classList.add("border-bottom")
-    } else if (value === "reset") {
-      // Remove the next session information when returning to a session
-      if (document.querySelector(".break-span")) {
-        timerLabel.removeChild(document.querySelector(".break-span"))
-      }
       timerLabelP.classList.add("border-bottom")
     }
   }
@@ -150,6 +144,7 @@ export function Timer() {
       clearInterval(intervalIdRef.current)
     }
   }, [])
+
   return (
     <>
       <TimerDisplay

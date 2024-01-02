@@ -1,18 +1,15 @@
 import React from "react"
 
 export default function TimerPresets(props) {
-  const showPresets = () => {
-    const presetsContainer = document.getElementById("presets-container")
-    presetsContainer.style.opacity = "1"
-    presetsContainer.style.height = "auto"
-  }
   const hideShowPresets = () => {
     const presetsContainer = document.getElementById("presets-container")
 
     if (presetsContainer.style.opacity === "1") {
+      presetsContainer.style.display = "none"
       presetsContainer.style.opacity = "0"
       presetsContainer.style.height = "0"
     } else {
+      presetsContainer.style.display = "block"
       presetsContainer.style.opacity = "1"
       presetsContainer.style.height = "auto"
     }
@@ -35,8 +32,9 @@ export default function TimerPresets(props) {
   }
   return (
     <section id="presets-section">
-      <p onMouseOver={() => showPresets()} onClick={() => hideShowPresets()}>
-        Presets <i className="fa fa-caret-down" aria-hidden="true" />
+      <p onClick={() => hideShowPresets()}>
+        Presets{" "}
+        <i className="fa fa-caret-down presets-icon" aria-hidden="true" />
       </p>
       <div id="presets-container">
         <TimerPreset

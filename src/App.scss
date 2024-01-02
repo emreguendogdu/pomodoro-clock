@@ -1,4 +1,6 @@
 $transition: 800ms;
+$space-highlight: hsl(233, 23%, 65%);
+$forest-highlight: #b39e57;
 
 * {
   margin: 0;
@@ -78,6 +80,7 @@ body {
         }
         #presets-container {
           cursor: pointer;
+          display: none;
           height: 0;
           opacity: 0;
           transition: $transition;
@@ -86,10 +89,15 @@ body {
     }
   }
   footer {
+    box-sizing: border-box;
     padding-top: 10px;
     @include flex-center;
+    width: 35vw;
+    justify-content: space-between;
+    margin: 0 auto;
     * {
       transition: $transition;
+      font-size: 1.15rem;
     }
     a {
       text-decoration: none;
@@ -100,7 +108,116 @@ body {
     #theme-switch-button {
       cursor: pointer;
       border: 0;
-      margin-left: 50px;
+      
     }
+  }
+  .nametag {
+    padding-right: 35px;
+  }
+}
+
+.presets-icon {
+  animation: rotate 3s 1;
+}
+
+#session-increment:hover .fa-arrow-up,
+#break-increment:hover .fa-arrow-up {
+  animation: arrow-up 0.75s 1;
+}
+#session-decrement:hover .fa-arrow-down,
+#break-decrement:hover .fa-arrow-down {
+  animation: arrow-down 0.75s 1;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(90deg) translateY(-25px);
+  }
+  75% {
+    transform: rotate(90deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#app p,
+#app h1 {
+  animation: fade-in 1s;
+}
+
+.fa-rocket {
+  animation: space-glow 5s;
+}
+.fa-rocket:hover {
+  box-shadow: 0 0 2em 0.5em $space-highlight;
+}
+
+.fa-tree {
+  animation: forest-glow 5s;
+}
+.fa-tree:hover {
+  box-shadow: 0 0 2em 0.5em $forest-highlight;
+}
+
+@keyframes space-glow {
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 2em 0.5em $space-highlight;
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+@keyframes forest-glow {
+  0% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 2em 0.5em $forest-highlight;
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes arrow-up {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes arrow-down {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }
