@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from "react"
-import { LengthControl } from "./LengthControl"
-import { TimerDisplay } from "./TimerDisplay"
-import { handleAudio } from "../AudioPlayer"
-import TimerPresets from "./TimerPresets"
+import { useState, useRef, useEffect } from "react"
+import { LengthControl } from "../LengthControl"
+import { handleAudio } from "../../AudioPlayer"
+import Presets from "../Presets/Presets"
+import { ReactComponent as ResetIcon } from "../../../assets/icons/resetIcon.svg"
+import { ReactComponent as SettingsIcon } from "../../../assets/icons/settingsIcon.svg"
+import "./Timer.css"
 
 export function Timer() {
   const [breakLength, setBreakLength] = useState(5)
@@ -10,7 +12,6 @@ export function Timer() {
   const [labelDisplay, setLabelDisplay] = useState("Session 1")
   const intervalIdRef = useRef(null)
 
-  // Format time in MM:SS
   const formatTime = (minutes, seconds) => {
     const formattedMinutes = String(minutes).padStart(2, "0")
     const formattedSeconds = String(seconds).padStart(2, "0")
@@ -40,7 +41,6 @@ export function Timer() {
     setBreakLength((prev) => (prev > 1 ? prev - 1 : prev))
   }
 
-  // Reset all settings to default
   const resetTimer = () => {
     const defaultSessionLength = 25
     stopInterval()
@@ -54,18 +54,31 @@ export function Timer() {
     handleTimerLabel("reset")
   }
 
-  // Handle timer label display based on the given value
+  const showHideSettings = () => {
+    const settingsWrapper = document.getElementById("settings-wrapper")
+    if (
+      settingsWrapper.style.visibility === "hidden" ||
+      !settingsWrapper.style.visibility
+    ) {
+      settingsWrapper.style.visibility = "visible"
+      settingsWrapper.style.opacity = 1
+      settingsWrapper.style.right = 0
+      settingsWrapper.style.position = "relative"
+    } else {
+      settingsWrapper.style.visibility = "hidden"
+      settingsWrapper.style.opacity = 0
+      settingsWrapper.style.right = "800px"
+      settingsWrapper.style.position = "absolute"
+    }
+  }
+
   const handleTimerLabel = (value) => {
     const timerLabel = document.getElementById("timer-label")
-    const timerLabelP = document.querySelector("#timer-label p")
     const breakSpan = document.querySelector(".break-span")
 
     if (value === "break") {
-      // Display "Break" label
       setLabelDisplay("Break")
-      timerLabelP.classList.remove("border-bottom")
 
-      // Display the next session information
       if (!breakSpan) {
         const span = document.createElement("span")
         span.classList.add("break-span")
@@ -77,63 +90,48 @@ export function Timer() {
         timerLabel.removeChild(breakSpan)
       }
       setLabelDisplay(`Session ${sessionNum}`)
-      timerLabelP.classList.add("border-bottom")
     }
   }
 
-  // Stop the running interval
   const stopInterval = () => {
     clearInterval(intervalIdRef.current)
     intervalIdRef.current = null
   }
 
-  // Initializations
   let timerDuration = 60 * sessionLength
   let sessionNum = 1
   let timerStatus
 
-  // Handle start and stop of the timer
   const handleStartStop = () => {
     if (intervalIdRef.current === null) {
       handleAudio("stop")
 
-      // Start the interval
       const id = setInterval(() => {
-        const timerDisplay = document.getElementById("time-left")
-        timerDisplay.classList.add("highlight")
-        setTimeout(() => timerDisplay.classList.remove("highlight"), 500)
         if (timerDuration === 0) {
-          // When timer reaches 0
           handleAudio("play")
 
           if (timerStatus !== "break") {
-            // Switch to break time
             handleTimerLabel("break")
             timerDuration = breakLength * 60
             sessionNum += 1
             timerStatus = "break"
           } else {
-            // Switch back to session time
             handleTimerLabel("session")
             timerDuration = sessionLength * 60
             timerStatus = "session"
           }
         } else {
-          // Decrease the timer duration
           timerDuration -= 1
         }
         updateDisplay(timerDuration)
       }, 1000)
 
-      // Set timer to running
       intervalIdRef.current = id
     } else {
-      // Stop the running interval if the timer is already running
       stopInterval()
     }
   }
 
-  // Update the display when the session length changes
   useEffect(() => {
     updateDisplay(sessionLength * 60)
   })
@@ -147,26 +145,41 @@ export function Timer() {
 
   return (
     <>
-      <TimerDisplay
-        labelDisplay={labelDisplay}
-        handleStartStop={handleStartStop}
-        handleReset={resetTimer}
-      />
-      <div className="length-container">
-        <LengthControl
-          event="session"
-          length={sessionLength}
-          handleIncrement={sessionIncrement}
-          handleDecrement={sessionDecrement}
-        />
-        <LengthControl
-          event="break"
-          length={breakLength}
-          handleIncrement={breakIncrement}
-          handleDecrement={breakDecrement}
-        />
+      <div id="timer">
+        <div id="timer-label">
+          <p>{labelDisplay}</p>
+        </div>
+        <p id="time-left"></p>
+        <audio id="beep" loop preload="auto">
+          <source src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
+        </audio>
+        <button id="start_stop" onClick={() => handleStartStop()}>
+          start
+        </button>
+        <button id="reset-icon" onClick={() => resetTimer()}>
+          <ResetIcon className="icon" />
+        </button>
+        <button id="settings-icon" onClick={() => showHideSettings()}>
+          <SettingsIcon className="icon" />
+        </button>
       </div>
-      <TimerPresets setSession={setSessionLength} setBreak={setBreakLength} />
+      <div id="settings-wrapper">
+        <div className="length-container">
+          <LengthControl
+            event="session"
+            length={sessionLength}
+            handleIncrement={sessionIncrement}
+            handleDecrement={sessionDecrement}
+          />
+          <LengthControl
+            event="break"
+            length={breakLength}
+            handleIncrement={breakIncrement}
+            handleDecrement={breakDecrement}
+          />
+        </div>
+        <Presets setSession={setSessionLength} setBreak={setBreakLength} />
+      </div>
     </>
   )
 }

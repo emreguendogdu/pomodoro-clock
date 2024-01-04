@@ -1,70 +1,52 @@
 :root[color-scheme="forest"] {
-  --background-image: url("./assets/forest2.webp");
+  --background-image: url("./assets/images/forest2.webp");
   --background: #4b3c37;
   --background-secondary: #534540;
   --text-color: #c6c8ad;
   --highlight: #b39e57;
-  --app-border: 0.2rem solid var(--background-secondary);
 }
 
 :root[color-scheme="space"] {
-  --background-image: url("./assets/space_theme.jpg");
-  background-size: cover;
-  --background: #19120d;
-  --background-secondary: #2d2725;
+  --background-image: url("./assets/images/space_theme.jpg");
+  --background: black;
+  --background-secondary: rgba(255, 255, 255, 0.1);
   --text-color: #cecece;
   --highlight: hsl(233, 23%, 65%);
-  
-  --app-border: 0.2rem solid var(--background-secondary);
 }
 
 body {
   background-color: var(--background);
-  color: var(--text-color);
 }
 
 #background-container {
   background-image: var(--background-image);
-  border-bottom: var(--app-border);
   background-position: center;
-}
-
-#app {
-  background-color: var(--background);
-  border: var(--app-border);
 }
 
 #app p:hover {
   color: var(--highlight);
 }
 
-.border-bottom {
-  border-bottom: 10px solid var(--background-secondary);
-}
-
-#app button {
+body,
+#app button,
+.break-span {
   color: var(--text-color);
-  background-color: var(--background-secondary);
+}
+#app button {
+  background-color: transparent;
+  transition: 400ms;
+}
+#app button i {
+  font-size: 1.2rem;
 }
 #app button:hover {
   background-color: var(--text-color);
+  font-weight: bold;
   color: var(--background);
 }
 .break-span {
-  color: var(--text-color);
   background-color: var(--background-secondary);
 }
 .highlight {
-  color: var(--highlight);
-}
-footer a {
-  color: var(--text-color);
-}
-#theme-switch-button {
-  color: var(--text-color);
-  background-color: var(--background);
-}
-footer a:hover,
-#theme-switch-button:hover {
   color: var(--highlight);
 }

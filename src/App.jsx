@@ -1,8 +1,7 @@
 import "./App.scss"
 import "./Themes.css"
-import { Footer } from "./components/visibles/Footer"
-// import Tasks from "./components/visibles/Tasks/Tasks"
-import { Timer } from "./components/visibles/Timer"
+import { Footer } from "./components/visibles/Footer/Footer"
+import { Timer } from "./components/visibles/Timer/Timer"
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
       <div id="app-container">
         <div id="app">
           <Timer />
-          {/* <Tasks /> */}
         </div>
       </div>
       <Footer />

@@ -1,0 +1,65 @@
+:root {
+  --transition: 800ms;
+  --space-highlight: hsl(233, 23%, 65%);
+  --forest-highlight: #b39e57;
+}
+
+footer {
+  font-family: "Space Grotesk", sans-serif;
+  box-sizing: border-box;
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 35vw;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.nametag {
+  padding-right: 35px;
+}
+
+footer * {
+  transition: var(--transition);
+  font-size: 1.15rem;
+}
+footer a {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+footer a,
+footer i {
+  text-shadow: 4px 4px black;
+}
+footer i {
+  padding: 0 5px;
+}
+
+footer #theme-switch-button {
+  color: var(--text-color);
+  background-color: var(--background);
+  cursor: pointer;
+  background-color: transparent !important;
+  border: none;
+}
+
+footer a:hover,
+footer #theme-switch-button:hover {
+  color: var(--highlight);
+}
+
+.fa-rocket {
+  animation: space-glow 5s;
+}
+.fa-rocket:hover {
+  box-shadow: 0 0 2em 0.5em var(--space-highlight);
+}
+
+.fa-tree {
+  animation: forest-glow 5s;
+}
+.fa-tree:hover {
+  box-shadow: 0 0 2em 0.5em var(--forest-highlight);
+}

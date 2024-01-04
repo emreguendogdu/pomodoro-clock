@@ -1,0 +1,19 @@
+#settings-wrapper {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  right: 800px;
+  transition: 350ms ease;
+}
+
+button .icon path {
+  fill: var(--text-color);
+}
+button:hover .icon path {
+  fill: var(--background-color);
+}
+
+#start_stop {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem !important;
+}

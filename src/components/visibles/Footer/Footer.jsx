@@ -1,5 +1,5 @@
-import { useCallback } from "react"
-import ThemeChanger from "../ThemeChanger"
+import ThemeChanger from "../../ThemeChanger"
+import "./Footer.css"
 
 export const Footer = () => {
   return (
@@ -10,17 +10,24 @@ export const Footer = () => {
           target="_blank"
           rel="noreferrer noopener"
         >
-          <i className="fa fa-brands fa-github" />
+          <i className="fa fa-brands fa-github icon" />
         </a>
         <a
           href="https://linkedin.com/in/osmangund"
           target="_blank"
           rel="noreferrer noopener"
         >
-          <i className="fa-brands fa-linkedin-in" />
+          <i className="fa-brands fa-linkedin-in icon" />
         </a>
       </div>
-      <p className="nametag">osmangund</p>
+      <a
+        className="nametag"
+        href="https://linkedin.com/in/osmangund"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        osmangund
+      </a>
       <ThemeChanger />
     </footer>
   )

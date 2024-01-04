@@ -1,6 +1,26 @@
 $transition: 800ms;
 $space-highlight: hsl(233, 23%, 65%);
 $forest-highlight: #b39e57;
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
+
+@media only screen and (max-width: 600px) {
+  footer {
+    width: auto !important;
+    padding: 0 35px;
+  }
+}
+
+@media only screen and (max-width: 475px) {
+  #session-length,
+  #break-length {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+a {
+  text-decoration: none;
+}
 
 * {
   margin: 0;
@@ -13,29 +33,31 @@ $forest-highlight: #b39e57;
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
   transition: $transition;
   #background-container {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100vw;
-    height: 60vh;
+    width: 100%;
+    height: 100vh;
     background-size: cover;
-    border-radius: 0 0 4% 4%;
+    filter: brightness(0.75);
     z-index: -1;
     transition: ($transition * 1.5) ease-in-out;
   }
   #app-container {
     @include flex-center;
+    position: relative;
     padding-top: 8rem;
+    font-family: "Space Grotesk", sans-serif;
     #app {
       @include flex-center;
       flex-direction: column;
       min-width: 30vw;
       font-size: 3rem;
       border-radius: 8%;
+      filter: brightness(110%);
       p {
+        text-shadow: 2px 2px black;
         margin: 10px;
         padding: 16px;
         transition: $transition;
@@ -51,13 +73,18 @@ body {
         text-transform: capitalize;
       }
       button {
+        font-family: "Space Grotesk", sans-serif;
+        text-shadow: 4px 2px black;
         margin: 16px;
         padding: 8px 16px;
-        border: 1px solid black;
+        border: none;
         border-radius: 8px;
         font-size: 1rem;
         cursor: pointer;
         transition: $transition;
+        &:hover {
+          text-shadow: none;
+        }
       }
       .break-span {
         display: block;
@@ -70,54 +97,8 @@ body {
           font-size: 2rem;
         }
       }
-      #presets-section {
-        p {
-          cursor: pointer;
-          font-size: 1.2rem;
-          padding: 0;
-          margin: 0;
-          display: inline;
-        }
-        #presets-container {
-          cursor: pointer;
-          display: none;
-          height: 0;
-          opacity: 0;
-          transition: $transition;
-        }
-      }
     }
   }
-  footer {
-    box-sizing: border-box;
-    padding-top: 10px;
-    @include flex-center;
-    width: 35vw;
-    justify-content: space-between;
-    margin: 0 auto;
-    * {
-      transition: $transition;
-      font-size: 1.15rem;
-    }
-    a {
-      text-decoration: none;
-      i {
-        padding: 0 5px;
-      }
-    }
-    #theme-switch-button {
-      cursor: pointer;
-      border: 0;
-      
-    }
-  }
-  .nametag {
-    padding-right: 35px;
-  }
-}
-
-.presets-icon {
-  animation: rotate 3s 1;
 }
 
 #session-increment:hover .fa-arrow-up,
@@ -127,6 +108,11 @@ body {
 #session-decrement:hover .fa-arrow-down,
 #break-decrement:hover .fa-arrow-down {
   animation: arrow-down 0.75s 1;
+}
+
+#app p,
+#app h1 {
+  animation: fade-in 1s;
 }
 
 @keyframes rotate {
@@ -145,25 +131,6 @@ body {
   100% {
     transform: rotate(0deg);
   }
-}
-
-#app p,
-#app h1 {
-  animation: fade-in 1s;
-}
-
-.fa-rocket {
-  animation: space-glow 5s;
-}
-.fa-rocket:hover {
-  box-shadow: 0 0 2em 0.5em $space-highlight;
-}
-
-.fa-tree {
-  animation: forest-glow 5s;
-}
-.fa-tree:hover {
-  box-shadow: 0 0 2em 0.5em $forest-highlight;
 }
 
 @keyframes space-glow {
