@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/pomodoro-clock/static/css/main.64a0ff73.css",
-    "main.js": "/pomodoro-clock/static/js/main.f64a7c53.js",
+    "main.css": "/pomodoro-clock/static/css/main.4d9f208d.css",
+    "main.js": "/pomodoro-clock/static/js/main.e0ead79d.js",
     "static/media/space_theme.jpg": "/pomodoro-clock/static/media/space_theme.41f790c71317156e659b.jpg",
     "static/media/forest2.webp": "/pomodoro-clock/static/media/forest2.09a64b3806848cda21bb.webp",
     "index.html": "/pomodoro-clock/index.html",
     "static/media/settingsIcon.svg": "/pomodoro-clock/static/media/settingsIcon.295447721a107774013771a95e9495f7.svg",
     "static/media/resetIcon.svg": "/pomodoro-clock/static/media/resetIcon.eb7e605f325f81341c6bc7d6c85689b0.svg",
-    "main.64a0ff73.css.map": "/pomodoro-clock/static/css/main.64a0ff73.css.map",
-    "main.f64a7c53.js.map": "/pomodoro-clock/static/js/main.f64a7c53.js.map"
+    "main.4d9f208d.css.map": "/pomodoro-clock/static/css/main.4d9f208d.css.map",
+    "main.e0ead79d.js.map": "/pomodoro-clock/static/js/main.e0ead79d.js.map"
   },
   "entrypoints": [
-    "static/css/main.64a0ff73.css",
-    "static/js/main.f64a7c53.js"
+    "static/css/main.4d9f208d.css",
+    "static/js/main.e0ead79d.js"
   ]
 }
