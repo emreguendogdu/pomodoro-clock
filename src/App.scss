@@ -46,6 +46,7 @@ body {
   }
   #app-container {
     @include flex-center;
+    flex-direction: column;
     position: relative;
     padding-top: 8rem;
     font-family: "Space Grotesk", sans-serif;

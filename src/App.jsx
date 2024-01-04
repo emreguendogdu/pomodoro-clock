@@ -11,8 +11,8 @@ function App() {
         <div id="app">
           <Timer />
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }

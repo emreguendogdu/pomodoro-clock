@@ -25,6 +25,7 @@ export function Timer() {
       minutes,
       seconds
     )
+    document.title = `${formatTime(minutes, seconds)} - Pomodoro Clock | osmangund`
   }
 
   const sessionIncrement = () => {
