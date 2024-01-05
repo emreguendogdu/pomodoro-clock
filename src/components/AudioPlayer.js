@@ -1,3 +1,5 @@
+import React from "react"
+
 export const handleAudio = (value) => {
   const audio = document.getElementById("beep")
 
@@ -10,5 +12,14 @@ export const handleAudio = (value) => {
     // Stop and reset audio
     audio.pause()
     audio.currentTime = 0
+    return
   }
+}
+
+export default function AudioPlayer() {
+  return (
+    <audio id="beep" loop preload="auto">
+      <source src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav" />
+    </audio>
+  )
 }

@@ -17,3 +17,16 @@ button:hover .icon path {
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.5rem !important;
 }
+
+#timer-label {
+  display: flex;
+  flex-direction: column;
+}
+#break-span {
+  font-size: 1.2rem;
+}
+
+#timer-display {
+  display: flex;
+  flex-direction: column;
+}
