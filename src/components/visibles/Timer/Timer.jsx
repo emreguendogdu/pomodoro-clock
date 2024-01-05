@@ -93,6 +93,17 @@ export function Timer() {
     document.title = `${formatTime(timer)} - Pomodoro Timer | osmangund`
   }, [timer])
 
+  useEffect(() => {
+    if (timerStatus === "session") {
+      setTimer(sessionLength * 60)
+    } else if (timerStatus === "break") {
+      setTimer(breakLength * 60)
+    }
+
+  }, [sessionLength, timerStatus, breakLength])
+
+
+
   return (
     <div id="timer">
       <div id="timer-label">
@@ -107,18 +118,21 @@ export function Timer() {
         </p>
       </div>
       <p id="time-left">{formatTime(timer)}</p>
+
       <AudioPlayer />
+
       <button id="start_stop" onClick={() => handleStartPause()}>
         {pause ? "start" : "pause"}
       </button>
       <button id="reset-icon" onClick={() => resetTimer()}>
         <ResetIcon className="icon" />
       </button>
+
       <TimerSettings
         sessionLength={sessionLength}
         breakLength={breakLength}
-        setSessionLength={setSessionLength}
-        setBreakLength={setBreakLength}
+        setSessionLength={(value) => setSessionLength(value)}
+        setBreakLength={(value) => setBreakLength(value)}
       />
     </div>
   )

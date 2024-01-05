@@ -6,8 +6,8 @@ export default function TimerPresets(props) {
         <button
           id={`${props.s}-${props.b}-preset`}
           onClick={() => {
-            props.setS(props.s)
-            props.setB(props.b)
+            props.setS(+props.s)
+            props.setB(+props.b)
           }}
         >
           {props.s} - {props.b}

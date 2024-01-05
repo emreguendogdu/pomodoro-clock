@@ -1,8 +1,4 @@
 #settings-wrapper {
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  right: 800px;
   transition: 350ms ease;
 }
 
@@ -29,4 +25,28 @@ button:hover .icon path {
 #timer-display {
   display: flex;
   flex-direction: column;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  
+  position: relative;
+}
+.visible * {
+  user-select: none;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+}
+
+html {
+  overflow: hidden;
+}
+
+.fa-arrow-down, .fa-arrow-up {
+pointer-events: none;
 }
