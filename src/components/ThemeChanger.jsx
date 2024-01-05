@@ -14,9 +14,9 @@ export default function ThemeChanger() {
         onClick={() => setTheme(theme === "forest" ? "space" : "forest")}
       >
         {theme === "forest" ? (
-        <i className="fa fa-solid fa-rocket"></i>
-          ) : (
-            <i className="fa fa-solid fa-tree"></i>
+          <i className="fa fa-solid fa-rocket"></i>
+        ) : (
+          <i className="fa fa-solid fa-tree"></i>
         )}
       </button>
     </>

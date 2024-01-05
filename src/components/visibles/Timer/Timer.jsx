@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react"
-
-import AudioPlayer, { handleAudio } from "../../AudioPlayer"
+import AudioPlayer, { playAudio, stopAudio } from "../../AudioPlayer"
 import { ReactComponent as ResetIcon } from "../../../assets/icons/resetIcon.svg"
-
 import "./Timer.css"
 import TimerSettings from "./TimerSettings"
 const timerSpeed = 1000 // ms
@@ -27,7 +25,7 @@ export function Timer() {
 
   const resetTimer = () => {
     stopInterval()
-    handleAudio("stop")
+    stopAudio()
     setSessionLength(25)
     setBreakLength(5)
     setTimer(25 * 60)
@@ -53,32 +51,29 @@ export function Timer() {
 
   const handleStartPause = () => {
     if (intervalIdRef.current === null) {
-      handleAudio("stop")
+      stopAudio()
 
-      const id = setInterval(
-        () => {
-          setTimer((prevTimer) => {
-            if (prevTimer === 0) {
-              handleAudio("play")
-              setTimerStatus((prevStatus) => {
-                if (prevStatus === "session") {
-                  setBreak()
-                } else {
-                  setSession()
-                }
-              })
-            } else {
-              if (setPause) {
-                setPause(false)
+      const id = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer === 0) {
+            playAudio()
+            setTimerStatus((prevStatus) => {
+              if (prevStatus === "session") {
+                setBreak()
+              } else {
+                setSession()
               }
-              setTimer(prevTimer - 1)
-
-              return prevTimer - 1
+            })
+          } else {
+            if (setPause) {
+              setPause(false)
             }
-          })
-        },
-        timerSpeed
-      )
+
+            setTimer(prevTimer - 1)
+            return prevTimer - 1
+          }
+        })
+      }, timerSpeed)
 
       intervalIdRef.current = id
     } else {
