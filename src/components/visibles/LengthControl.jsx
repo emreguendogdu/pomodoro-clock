@@ -1,5 +1,4 @@
 export function LengthControl(props) {
-
   function handleIncrement() {
     if (props.event === "session") {
       props.setSessionLength((prev) => (prev < 60 ? prev + 1 : prev))
@@ -19,7 +18,8 @@ export function LengthControl(props) {
 
   function handleValues(event) {
     const type = event.target.dataset.type
-    type === "increment" ? handleIncrement() : handleDecrement()
+    if (type === "increment") return handleIncrement()
+    if (type === "decrement") return handleDecrement()
   }
 
   return (
@@ -31,7 +31,6 @@ export function LengthControl(props) {
         data-type="decrement"
       >
         <i className="fa fa-arrow-down" />
-        {/* This icons has pointer events none on CSS */}
       </button>
       <p id={`${props.event}-length`}>{props.length}</p>
       <button

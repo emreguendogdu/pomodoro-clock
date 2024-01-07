@@ -50,36 +50,31 @@ export function Timer() {
   }
 
   const handleStartPause = () => {
-    if (intervalIdRef.current === null) {
-      stopAudio()
-
-      const id = setInterval(() => {
-        setTimer((prevTimer) => {
-          if (prevTimer === 0) {
-            playAudio()
-            setTimerStatus((prevStatus) => {
-              if (prevStatus === "session") {
-                setBreak()
-              } else {
-                setSession()
-              }
-            })
-          } else {
-            if (setPause) {
-              setPause(false)
-            }
-
-            setTimer(prevTimer - 1)
-            return prevTimer - 1
-          }
-        })
-      }, timerSpeed)
-
-      intervalIdRef.current = id
-    } else {
+    if (intervalIdRef.current !== null) {
       stopInterval()
       setPause(true)
+      return
     }
+
+    stopAudio()
+
+    const id = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 0) {
+          playAudio()
+          setTimerStatus((prevStatus) => {
+            prevStatus === "session" ? setBreak() : setSession()
+          })
+          return
+        }
+
+        setPause && setPause(false)
+        setTimer(prevTimer - 1)
+        return prevTimer - 1
+      })
+    }, timerSpeed)
+
+    intervalIdRef.current = id
   }
 
   // Cleanup on component unmount
@@ -94,15 +89,9 @@ export function Timer() {
   }, [timer])
 
   useEffect(() => {
-    if (timerStatus === "session") {
-      setTimer(sessionLength * 60)
-    } else if (timerStatus === "break") {
-      setTimer(breakLength * 60)
-    }
-
+    if (timerStatus === "session") return setTimer(sessionLength * 60)
+    if (timerStatus === "break") return setTimer(breakLength * 60)
   }, [sessionLength, timerStatus, breakLength])
-
-
 
   return (
     <div id="timer">
