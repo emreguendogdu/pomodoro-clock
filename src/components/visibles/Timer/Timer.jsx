@@ -30,6 +30,7 @@ export function Timer() {
     setBreakLength(5)
     setTimer(25 * 60)
     setSessionNum(1)
+    setPause(true)
     setTimerStatus("session")
   }
 
